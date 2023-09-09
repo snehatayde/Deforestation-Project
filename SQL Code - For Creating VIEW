@@ -1,0 +1,18 @@
+CREATE VIEW forestation
+AS
+(SELECT f.country_code,
+f.country_name,
+f.year,
+f.forest_area_sqkm,
+l.total_area_sq_mi,
+r.income_group,
+( l.total_area_sq_mi * 2.59 ) AS
+"total_area_sqkm",
+f.forest_area_sqkm / ( l.total_area_sq_mi * 2.59 ) AS
+"forest_area_over_land_area_percentage"
+FROM forest_area f
+JOIN land_area l
+ON ( l.country_code = f.country_code
+AND l.year = f.year )
+JOIN regions r
+ON r.country_code = f.country_code);
